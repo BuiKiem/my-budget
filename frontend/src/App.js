@@ -1,15 +1,16 @@
 import React from "react";
+import { CssBaseline } from "@material-ui/core";
 
-import { Navbar } from "./components/Navbar/Navbar";
-
-import "./App.css";
+import { Layout } from "./components/Layout/Layout";
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <h1>React App</h1>
-    </div>
+    <React.Fragment>
+      <CssBaseline />
+      <Layout>
+        <h1>My App</h1>
+      </Layout>
+    </React.Fragment>
   );
 }
 

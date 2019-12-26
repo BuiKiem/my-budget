@@ -1,16 +1,24 @@
 import React from "react";
-import { CssBaseline } from "@material-ui/core";
+import { CssBaseline, createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 import { Layout } from "./components/Layout/Layout";
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#21cb87"
+    }
+  }
+});
+
 function App() {
   return (
-    <React.Fragment>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Layout>
         <h1>My App</h1>
       </Layout>
-    </React.Fragment>
+    </ThemeProvider>
   );
 }
 

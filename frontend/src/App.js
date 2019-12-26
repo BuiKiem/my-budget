@@ -8,6 +8,18 @@ const theme = createMuiTheme({
     primary: {
       main: "#21cb87"
     }
+  },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: "#eff0f2"
+      }
+    },
+    MuiCard: {
+      root: {
+        backgroundColor: "#fff"
+      }
+    }
   }
 });
 

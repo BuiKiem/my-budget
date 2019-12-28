@@ -1,15 +1,36 @@
 import React from "react";
+import { CssBaseline, createMuiTheme, ThemeProvider } from "@material-ui/core";
 
-import { Navbar } from "./components/Navbar/Navbar";
+import { Layout } from "./components/Layout/Layout";
 
-import "./App.css";
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#21cb87"
+    }
+  },
+  overrides: {
+    MuiPaper: {
+      root: {
+        backgroundColor: "#eff0f2"
+      }
+    },
+    MuiCard: {
+      root: {
+        backgroundColor: "#fff"
+      }
+    }
+  }
+});
 
 function App() {
   return (
-    <div className="App">
-      <Navbar />
-      <h1>React App</h1>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Layout>
+        <h1>My App</h1>
+      </Layout>
+    </ThemeProvider>
   );
 }
 

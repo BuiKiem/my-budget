@@ -1,7 +1,7 @@
 import React from "react";
 import { CssBaseline, createMuiTheme, ThemeProvider } from "@material-ui/core";
 
-import { Layout } from "./components/Layout/Layout";
+import { IndexPage } from "./pages/IndexPage/IndexPage";
 
 const theme = createMuiTheme({
   palette: {
@@ -27,9 +27,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Layout>
-        <h1>My App</h1>
-      </Layout>
+      <IndexPage />
     </ThemeProvider>
   );
 }

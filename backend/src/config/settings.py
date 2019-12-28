@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     # 3rd party framework
     "rest_framework",
     # my app
-    "core",
+    "core.apps.CoreConfig",
 ]
 
 MIDDLEWARE = [

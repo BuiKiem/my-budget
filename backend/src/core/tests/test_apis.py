@@ -72,7 +72,7 @@ class AccountApiTestCase(APITestCase):
 
         response = self.client.patch(url, data=new_value, format="json")
 
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_delete_account(self) -> None:
         """Ensure that user can delete account"""

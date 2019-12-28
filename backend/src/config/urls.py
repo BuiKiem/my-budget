@@ -21,8 +21,6 @@ from core.api.urls import core_router
 
 root_router = routers.DefaultRouter()
 root_router.registry.extend(core_router.registry)
-print(core_router.urls)
-
 
 urlpatterns = [
     path("api/", include(root_router.urls)),

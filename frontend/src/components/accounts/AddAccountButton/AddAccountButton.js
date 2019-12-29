@@ -12,13 +12,14 @@ const useStyles = makeStyles({
   }
 });
 
-export const AddAccountButton = () => {
+export const AddAccountButton = ({ onClick }) => {
   const theme = useTheme();
   const infoColor = theme.palette.info;
   const classes = useStyles({ infoColor });
 
   return (
     <Button
+      onClick={onClick}
       classes={{ root: classes.root }}
       variant="outlined"
       endIcon={<AddCircleIcon />}

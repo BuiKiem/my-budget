@@ -13,6 +13,9 @@ import { Settings as SettingsIcon } from "@material-ui/icons";
 
 import { Account } from "../Account/Account";
 import { AddAccountButton } from "../AddAccountButton/AddAccountButton";
+import { AddAccountModal } from "../AddAccountModal/AddAccountModal";
+
+import { useBoolean } from "../../../hooks";
 
 const useStyles = makeStyles({
   root: {
@@ -21,6 +24,7 @@ const useStyles = makeStyles({
 });
 
 export const AccountList = () => {
+  const [isOpen, handleOpen, handleClose] = useBoolean(false);
   const theme = useTheme();
   const classes = useStyles({ info: theme.palette.info });
   const accounts = [
@@ -64,10 +68,12 @@ export const AccountList = () => {
             </Grid>
           ))}
           <Grid item xs={6} sm={4} md={2}>
-            <AddAccountButton />
+            <AddAccountButton onClick={handleOpen} />
           </Grid>
         </Grid>
       </CardContent>
+
+      <AddAccountModal open={isOpen} handleClose={handleClose} />
     </Card>
   );
 };

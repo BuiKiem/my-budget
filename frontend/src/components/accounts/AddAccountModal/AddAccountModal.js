@@ -1,14 +1,40 @@
 import React from "react";
-import { Card, Modal, Slide } from "@material-ui/core";
+import {
+  Card,
+  Dialog,
+  Slide,
+  useMediaQuery,
+  useTheme,
+  makeStyles
+} from "@material-ui/core";
+
+const useStyles = makeStyles({
+  paper: {
+    minHeight: "80vh"
+  }
+});
 
 export const AddAccountModal = ({ open, handleClose }) => {
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
+  const classes = useStyles();
+
   return (
-    <Modal open={open} onClose={handleClose}>
+    <Dialog
+      classes={{
+        paper: classes.paper
+      }}
+      fullScreen={fullScreen}
+      fullWidth
+      maxWidth="sm"
+      open={open}
+      onClose={handleClose}
+    >
       <Slide in={open} direction="left">
         <Card>
           <h1>Modal Content</h1>
         </Card>
       </Slide>
-    </Modal>
+    </Dialog>
   );
 };

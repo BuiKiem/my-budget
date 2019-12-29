@@ -1,21 +1,26 @@
 import React from "react";
 import {
-  Card,
+  Button,
   Dialog,
+  DialogContent,
+  DialogActions,
+  MenuItem,
   Slide,
+  TextField,
   Grid,
   useMediaQuery,
   IconButton,
   useTheme,
   makeStyles,
-  Typography
+  Typography,
+  Card
 } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Close as CloseIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   paper: {
-    minHeight: "80vh"
+    // minHeight: "80vh"
   },
   titleRoot: {
     backgroundColor: props => props.titleBackground.main
@@ -44,11 +49,35 @@ const DialogTitle = props => {
   );
 };
 
+const currencies = [
+  {
+    value: "USD",
+    label: "$"
+  },
+  {
+    value: "EUR",
+    label: "€"
+  },
+  {
+    value: "BTC",
+    label: "฿"
+  },
+  {
+    value: "JPY",
+    label: "¥"
+  }
+];
+
 export const AddAccountModal = ({ open, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const classes = useStyles({ titleBackground: theme.palette.primary });
 
+  const [currency, setCurrency] = React.useState("EUR");
+
+  const handleChange = event => {
+    setCurrency(event.target.value);
+  };
   return (
     <Dialog
       classes={{
@@ -58,6 +87,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
       fullWidth
       maxWidth="sm"
       open={open}
+      PaperComponent={Card}
       onClose={handleClose}
       TransitionComponent={Slide}
       TransitionProps={{
@@ -73,9 +103,66 @@ export const AddAccountModal = ({ open, handleClose }) => {
       >
         ADD ACCOUNT
       </DialogTitle>
-      <Card>
-        <h1>Modal Content</h1>
-      </Card>
+      <DialogContent>
+        <form noValidate>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            label="Name"
+            name="name"
+            autoComplete="name"
+            placeholder="Account Name"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            select
+            fullWidth
+            label="Select"
+            value={currency}
+            onChange={handleChange}
+            helperText="Please select your currency"
+          >
+            {currencies.map(option => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.label}
+              </MenuItem>
+            ))}
+          </TextField>
+
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="amount"
+            label="Starting Amount"
+            placeholder="Account Initial Balance"
+            type="number"
+          />
+          <DialogActions>
+            <Button
+              size="large"
+              variant="contained"
+              onClick={handleClose}
+              color="secondary"
+            >
+              Cancel
+            </Button>
+            <Button
+              size="large"
+              variant="contained"
+              onClick={handleClose}
+              color="primary"
+            >
+              Add
+            </Button>
+          </DialogActions>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 };

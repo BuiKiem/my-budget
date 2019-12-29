@@ -29,12 +29,15 @@ export const AddAccountModal = ({ open, handleClose }) => {
       maxWidth="sm"
       open={open}
       onClose={handleClose}
+      TransitionComponent={Slide}
+      TransitionProps={{
+        in: open,
+        direction: "left"
+      }}
     >
-      <Slide in={open} direction="left">
-        <Card>
-          <h1>Modal Content</h1>
-        </Card>
-      </Slide>
+      <Card>
+        <h1>Modal Content</h1>
+      </Card>
     </Dialog>
   );
 };

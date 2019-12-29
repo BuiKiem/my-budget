@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   }
 });
 
-export const Account = ({ account: { name, balance, color } }) => {
+export const Account = ({ account: { name, initial_balance, color } }) => {
   const theme = useTheme();
   const textColor = theme.palette.getContrastText(`#${color}`);
   const classes = useStyles({ bgColor: color, textColor });
@@ -35,7 +35,7 @@ export const Account = ({ account: { name, balance, color } }) => {
       </Typography>
 
       <Typography variant="h6" component="h4">
-        {balance}
+        {initial_balance}
       </Typography>
     </Button>
   );

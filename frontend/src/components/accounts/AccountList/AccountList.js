@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Card,
   IconButton,
@@ -10,6 +10,7 @@ import {
   useTheme
 } from "@material-ui/core";
 import { Settings as SettingsIcon } from "@material-ui/icons";
+import useAxios from "axios-hooks";
 
 import { Account } from "../Account/Account";
 import { AddAccountButton } from "../AddAccountButton/AddAccountButton";
@@ -23,24 +24,11 @@ const useStyles = makeStyles({
   }
 });
 
-export const AccountList = () => {
+export const AccountList = ({ data }) => {
   const [isOpen, handleOpen, handleClose] = useBoolean(false);
   const theme = useTheme();
   const classes = useStyles({ info: theme.palette.info });
-  const accounts = [
-    {
-      id: 1,
-      name: "cash",
-      balance: 10000,
-      color: "f48fb1"
-    },
-    {
-      id: 2,
-      name: "saving",
-      balance: 20000,
-      color: "e91e63"
-    }
-  ];
+  const [accounts, setAccounts] = useState(data);
 
   return (
     <Card component="section" aria-label="accounts section">

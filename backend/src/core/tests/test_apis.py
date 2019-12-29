@@ -27,8 +27,14 @@ class AccountApiTestCase(APITestCase):
 
     def test_retrieve_account_list(self):
         url = reverse("account-list")
-        Account.objects.create(name="Account 1", color=Account.ColorChoices.GREEN.value, initial_balance=100)
-        Account.objects.create(name="Account 2", color=Account.ColorChoices.BLUE.value, initial_balance=200)
+        Account.objects.create(
+            name="Account 1",
+            color=Account.ColorChoices.GREEN.value,
+            initial_balance=100,
+        )
+        Account.objects.create(
+            name="Account 2", color=Account.ColorChoices.BLUE.value, initial_balance=200
+        )
 
         response = self.client.get(url)
 
@@ -37,8 +43,14 @@ class AccountApiTestCase(APITestCase):
 
     def test_retrieve_specific_account(self):
         url = reverse("account-detail", kwargs={"pk": 1})
-        account_1 = Account.objects.create(name="Account 1", color=Account.ColorChoices.GREEN.value, initial_balance=100)
-        Account.objects.create(name="Account 2", color=Account.ColorChoices.BLUE.value, initial_balance=200)
+        account_1 = Account.objects.create(
+            name="Account 1",
+            color=Account.ColorChoices.GREEN.value,
+            initial_balance=100,
+        )
+        Account.objects.create(
+            name="Account 2", color=Account.ColorChoices.BLUE.value, initial_balance=200
+        )
 
         response = self.client.get(url)
 
@@ -47,12 +59,16 @@ class AccountApiTestCase(APITestCase):
 
     def test_update_account(self) -> None:
         """Ensure that use can update the whole account."""
-        Account.objects.create(name="Account 1", color=Account.ColorChoices.GREEN.value, initial_balance=100)
+        Account.objects.create(
+            name="Account 1",
+            color=Account.ColorChoices.GREEN.value,
+            initial_balance=100,
+        )
         url = reverse("account-detail", kwargs={"pk": 1})
         new_value = {
             "name": "Account 2",
             "color": Account.ColorChoices.BLUE.value,
-            "initial_balance": 200
+            "initial_balance": 200,
         }
 
         response = self.client.put(url, data=new_value, format="json")
@@ -64,11 +80,13 @@ class AccountApiTestCase(APITestCase):
 
     def test_partial_update_not_allowed(self) -> None:
         """Ensure that user cannot partial update account."""
-        account = Account.objects.create(name="Account 1", color=Account.ColorChoices.GREEN.value, initial_balance=100)
+        account = Account.objects.create(
+            name="Account 1",
+            color=Account.ColorChoices.GREEN.value,
+            initial_balance=100,
+        )
         url = reverse("account-detail", kwargs={"pk": account.id})
-        new_value = {
-            "name": "Account 2"
-        }
+        new_value = {"name": "Account 2"}
 
         response = self.client.patch(url, data=new_value, format="json")
 
@@ -76,10 +94,13 @@ class AccountApiTestCase(APITestCase):
 
     def test_delete_account(self) -> None:
         """Ensure that user can delete account"""
-        account = Account.objects.create(name="Account 1", color=Account.ColorChoices.GREEN.value, initial_balance=100)
+        account = Account.objects.create(
+            name="Account 1",
+            color=Account.ColorChoices.GREEN.value,
+            initial_balance=100,
+        )
         url = reverse("account-detail", kwargs={"pk": account.id})
 
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
-

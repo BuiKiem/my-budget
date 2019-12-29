@@ -17,6 +17,8 @@ import {
 } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Close as CloseIcon } from "@material-ui/icons";
+import { useForm } from "react-hook-form";
+import * as Yup from "yup";
 
 const useStyles = makeStyles({
   titleRoot: {
@@ -65,12 +67,31 @@ const currencies = [
   }
 ];
 
+const schema = Yup.object().shape({
+  name: Yup.string().required("Account name is required"),
+  amount: Yup.number()
+    .required("Account amount is reuquired.")
+    .positive("Amount must be a positive number")
+    .integer("Amount must be an integer number")
+    .typeError("The amount must be a number")
+});
+
 export const AddAccountModal = ({ open, handleClose }) => {
+  const { register, handleSubmit, errors } = useForm({
+    validationSchema: schema,
+    defaultValues: {
+      name: "",
+      amount: 0
+    },
+    reValidateMode: "onBlur"
+  });
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const classes = useStyles({ titleBackground: theme.palette.primary });
 
   const [currency, setCurrency] = React.useState("EUR");
+
+  const onSubmit = data => console.log(data);
 
   const handleChange = event => {
     setCurrency(event.target.value);
@@ -101,10 +122,13 @@ export const AddAccountModal = ({ open, handleClose }) => {
         ADD ACCOUNT
       </DialogTitle>
       <DialogContent>
-        <form noValidate>
+        <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <TextField
+            inputRef={register}
+            helperText={errors.name ? errors.name.message : ""}
             variant="outlined"
             margin="normal"
+            error={!!errors.name}
             required
             fullWidth
             label="Name"
@@ -114,9 +138,11 @@ export const AddAccountModal = ({ open, handleClose }) => {
             autoFocus
           />
           <TextField
+            name="color"
             variant="outlined"
             margin="normal"
             select
+            inputRef={register}
             fullWidth
             label="Select"
             value={currency}
@@ -131,6 +157,9 @@ export const AddAccountModal = ({ open, handleClose }) => {
           </TextField>
 
           <TextField
+            error={!!errors.amount}
+            helperText={errors.amount ? errors.amount.message : ""}
+            inputRef={register}
             variant="outlined"
             margin="normal"
             required
@@ -138,7 +167,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
             name="amount"
             label="Starting Amount"
             placeholder="Account Initial Balance"
-            type="number"
+            type="text"
           />
           <DialogActions>
             <Button
@@ -150,9 +179,9 @@ export const AddAccountModal = ({ open, handleClose }) => {
               Cancel
             </Button>
             <Button
+              type="submit"
               size="large"
               variant="contained"
-              onClick={handleClose}
               color="primary"
             >
               Add

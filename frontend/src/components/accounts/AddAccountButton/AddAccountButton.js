@@ -7,7 +7,8 @@ const useStyles = makeStyles({
     height: "100%",
     width: "100%",
     color: props => props.infoColor.main,
-    borderColor: props => props.infoColor.main
+    borderColor: props => props.infoColor.main,
+    borderStyle: "dashed"
   }
 });
 

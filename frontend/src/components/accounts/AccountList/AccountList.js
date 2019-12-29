@@ -5,14 +5,24 @@ import {
   CardHeader,
   CardContent,
   Typography,
-  Grid
+  Grid,
+  makeStyles,
+  useTheme
 } from "@material-ui/core";
 import { Settings as SettingsIcon } from "@material-ui/icons";
 
 import { Account } from "../Account/Account";
 import { AddAccountButton } from "../AddAccountButton/AddAccountButton";
 
+const useStyles = makeStyles({
+  root: {
+    color: props => props.info.main
+  }
+});
+
 export const AccountList = () => {
+  const theme = useTheme();
+  const classes = useStyles({ info: theme.palette.info });
   const accounts = [
     {
       id: 1,
@@ -37,7 +47,10 @@ export const AccountList = () => {
           </Typography>
         }
         action={
-          <IconButton aria-label="configure account">
+          <IconButton
+            classes={{ root: classes.root }}
+            aria-label="configure account"
+          >
             <SettingsIcon />
           </IconButton>
         }

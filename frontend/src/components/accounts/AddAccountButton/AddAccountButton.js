@@ -22,7 +22,7 @@ export const AddAccountButton = () => {
       variant="outlined"
       endIcon={<AddCircleIcon />}
     >
-      <Typography variant="h6" component="h3">
+      <Typography variant="button" component="h3">
         Add account
       </Typography>
     </Button>

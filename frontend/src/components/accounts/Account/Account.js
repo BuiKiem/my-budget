@@ -30,11 +30,11 @@ export const Account = ({ account: { name, balance, color } }) => {
         contained: classes.contained
       }}
     >
-      <Typography variant="h6" component="h3">
+      <Typography variant="button" component="h3">
         {name}
       </Typography>
 
-      <Typography variant="body1" component="h4" display="block">
+      <Typography variant="h6" component="h4">
         {balance}
       </Typography>
     </Button>

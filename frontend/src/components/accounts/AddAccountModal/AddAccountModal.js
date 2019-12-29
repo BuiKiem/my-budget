@@ -19,9 +19,6 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Close as CloseIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles({
-  paper: {
-    // minHeight: "80vh"
-  },
   titleRoot: {
     backgroundColor: props => props.titleBackground.main
   }

@@ -1,5 +1,9 @@
 import React from "react";
-import { Card } from "@material-ui/core";
+import { Card, Button, IconButton } from "@material-ui/core";
+import {
+  AddCircle as AddCircleIcon,
+  Settings as SettingsIcon
+} from "@material-ui/icons";
 import { Account } from "../Account/Account";
 
 export const AccountList = () => {
@@ -19,11 +23,19 @@ export const AccountList = () => {
   ];
 
   return (
-    <Card>
-      <h2>List of accounts</h2>
-      {accounts.map(account => (
-        <Account key={account.id} account={account} />
-      ))}
-    </Card>
+    <section aria-label="accounts section">
+      <Card>
+        <h2>List of accounts</h2>
+        <IconButton aria-label="configure account">
+          <SettingsIcon />
+        </IconButton>
+        {accounts.map(account => (
+          <Account key={account.id} account={account} />
+        ))}
+        <Button variant="outlined" size="small" endIcon={<AddCircleIcon />}>
+          <h3>Add account</h3>
+        </Button>
+      </Card>
+    </section>
   );
 };

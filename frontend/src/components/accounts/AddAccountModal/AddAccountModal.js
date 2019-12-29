@@ -17,7 +17,7 @@ import {
 } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Close as CloseIcon } from "@material-ui/icons";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
 
 const useStyles = makeStyles({
@@ -77,10 +77,11 @@ const schema = Yup.object().shape({
 });
 
 export const AddAccountModal = ({ open, handleClose }) => {
-  const { register, handleSubmit, errors } = useForm({
+  const { register, handleSubmit, errors, control } = useForm({
     validationSchema: schema,
     defaultValues: {
       name: "",
+      color: "USD",
       amount: 0
     },
     reValidateMode: "onBlur"
@@ -89,13 +90,8 @@ export const AddAccountModal = ({ open, handleClose }) => {
   const fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const classes = useStyles({ titleBackground: theme.palette.primary });
 
-  const [currency, setCurrency] = React.useState("EUR");
-
   const onSubmit = data => console.log(data);
 
-  const handleChange = event => {
-    setCurrency(event.target.value);
-  };
   return (
     <Dialog
       classes={{
@@ -137,24 +133,32 @@ export const AddAccountModal = ({ open, handleClose }) => {
             placeholder="Account Name"
             autoFocus
           />
-          <TextField
+          <Controller
+            as={
+              <TextField
+                variant="outlined"
+                margin="normal"
+                select
+                required
+                fullWidth
+                label="Color"
+                error={!!errors.color}
+                helperText={
+                  errors.color
+                    ? errors.color.message
+                    : "Please select your currency"
+                }
+              >
+                {currencies.map(option => (
+                  <MenuItem key={option.value} value={option.value}>
+                    {option.label}
+                  </MenuItem>
+                ))}
+              </TextField>
+            }
             name="color"
-            variant="outlined"
-            margin="normal"
-            select
-            inputRef={register}
-            fullWidth
-            label="Select"
-            value={currency}
-            onChange={handleChange}
-            helperText="Please select your currency"
-          >
-            {currencies.map(option => (
-              <MenuItem key={option.value} value={option.value}>
-                {option.label}
-              </MenuItem>
-            ))}
-          </TextField>
+            control={control}
+          />
 
           <TextField
             error={!!errors.amount}

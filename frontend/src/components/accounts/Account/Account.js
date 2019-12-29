@@ -1,11 +1,41 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Typography, makeStyles, useTheme } from "@material-ui/core";
+
+const useStyles = makeStyles({
+  root: {
+    width: "100%",
+    textAlign: "left"
+  },
+  label: {
+    display: "block"
+  },
+  contained: {
+    backgroundColor: props => `#${props.bgColor}`,
+    color: props => `${props.textColor}`
+  }
+});
 
 export const Account = ({ account: { name, balance, color } }) => {
+  const theme = useTheme();
+  const textColor = theme.palette.getContrastText(`#${color}`);
+  const classes = useStyles({ bgColor: color, textColor });
   return (
-    <Button variant="contained" color="primary" size="small" disableElevation>
-      <h3>{name}</h3>
-      <h4>{balance}</h4>
+    <Button
+      variant="contained"
+      disableElevation
+      classes={{
+        root: classes.root,
+        label: classes.label,
+        contained: classes.contained
+      }}
+    >
+      <Typography variant="h6" component="h3">
+        {name}
+      </Typography>
+
+      <Typography variant="body1" component="h4" display="block">
+        {balance}
+      </Typography>
     </Button>
   );
 };

@@ -4,7 +4,9 @@ import {
   Button,
   IconButton,
   CardHeader,
-  Typography
+  CardContent,
+  Typography,
+  Grid
 } from "@material-ui/core";
 import {
   AddCircle as AddCircleIcon,
@@ -19,13 +21,13 @@ export const AccountList = () => {
       id: 1,
       name: "cash",
       balance: 10000,
-      color: "607d8b"
+      color: "f48fb1"
     },
     {
       id: 2,
       name: "saving",
       balance: 20000,
-      color: "ff9800"
+      color: "e91e63"
     }
   ];
 
@@ -44,13 +46,26 @@ export const AccountList = () => {
             </IconButton>
           }
         />
-
-        {accounts.map(account => (
-          <Account key={account.id} account={account} />
-        ))}
-        <Button variant="outlined" size="small" endIcon={<AddCircleIcon />}>
-          <h3>Add account</h3>
-        </Button>
+        <CardContent>
+          <Grid container spacing={1}>
+            {accounts.map(account => (
+              <Grid item xs={6} key={account.id}>
+                <Account account={account} />
+              </Grid>
+            ))}
+            <Grid item xs={6}>
+              <Button
+                variant="outlined"
+                size="small"
+                endIcon={<AddCircleIcon />}
+              >
+                <Typography variant="h6" component="h3">
+                  Add account
+                </Typography>
+              </Button>
+            </Grid>
+          </Grid>
+        </CardContent>
       </Card>
     </section>
   );

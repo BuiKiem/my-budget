@@ -9,6 +9,12 @@ const theme = createMuiTheme({
       main: "#21cb87"
     }
   },
+  transitions: {
+    duration: {
+      enteringScreen: 500,
+      leavingScreen: 500
+    }
+  },
   overrides: {
     MuiPaper: {
       root: {

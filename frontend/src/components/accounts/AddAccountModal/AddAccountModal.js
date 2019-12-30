@@ -58,7 +58,7 @@ const options = [];
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Account name is required"),
-  amount: Yup.number()
+  initial_balance: Yup.number()
     .required("Account amount is reuquired.")
     .positive("Amount must be a positive number")
     .integer("Amount must be an integer number")
@@ -71,7 +71,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
     defaultValues: {
       name: "",
       color: "",
-      amount: 0
+      initial_balance: 0
     },
     reValidateMode: "onBlur"
   });
@@ -85,7 +85,18 @@ export const AddAccountModal = ({ open, handleClose }) => {
       .then(response => response.data.map(option => options.push(option)));
   }, []);
 
-  const onSubmit = data => console.log(data);
+  const onSubmit = data => {
+    axios
+      .post("http://localhost:8000/api/accounts/", data)
+      .then(response => {
+        alert("Success!");
+        handleClose();
+      })
+      .catch(error => {
+        console.error(error);
+        alert(error);
+      });
+  };
 
   return (
     <Dialog
@@ -159,14 +170,16 @@ export const AddAccountModal = ({ open, handleClose }) => {
           />
 
           <TextField
-            error={!!errors.amount}
-            helperText={errors.amount ? errors.amount.message : ""}
+            error={!!errors.initial_balance}
+            helperText={
+              errors.initial_balance ? errors.initial_balance.message : ""
+            }
             inputRef={register}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="amount"
+            name="initial_balance"
             label="Starting Amount"
             placeholder="Account Initial Balance"
             type="text"

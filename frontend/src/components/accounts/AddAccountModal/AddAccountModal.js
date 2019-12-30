@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -19,6 +19,7 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Close as CloseIcon } from "@material-ui/icons";
 import { useForm, Controller } from "react-hook-form";
 import * as Yup from "yup";
+import axios from "axios";
 
 const useStyles = makeStyles({
   titleRoot: {
@@ -48,24 +49,7 @@ const DialogTitle = props => {
   );
 };
 
-const currencies = [
-  {
-    value: "USD",
-    label: "$"
-  },
-  {
-    value: "EUR",
-    label: "€"
-  },
-  {
-    value: "BTC",
-    label: "฿"
-  },
-  {
-    value: "JPY",
-    label: "¥"
-  }
-];
+const options = [];
 
 const schema = Yup.object().shape({
   name: Yup.string().required("Account name is required"),
@@ -81,7 +65,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
     validationSchema: schema,
     defaultValues: {
       name: "",
-      color: "USD",
+      color: "",
       amount: 0
     },
     reValidateMode: "onBlur"
@@ -89,6 +73,12 @@ export const AddAccountModal = ({ open, handleClose }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("xs"));
   const classes = useStyles({ titleBackground: theme.palette.primary });
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/accounts/get-color-list/")
+      .then(response => response.data.map(option => options.push(option)));
+  }, []);
 
   const onSubmit = data => console.log(data);
 
@@ -149,9 +139,9 @@ export const AddAccountModal = ({ open, handleClose }) => {
                     : "Please select your currency"
                 }
               >
-                {currencies.map(option => (
+                {options.map(option => (
                   <MenuItem key={option.value} value={option.value}>
-                    {option.label}
+                    {option.name}
                   </MenuItem>
                 ))}
               </TextField>

@@ -24,6 +24,11 @@ import axios from "axios";
 const useStyles = makeStyles({
   titleRoot: {
     backgroundColor: props => props.titleBackground.main
+  },
+  colorDisplay: {
+    width: "100%",
+    height: "1rem",
+    display: "block"
   }
 });
 
@@ -141,7 +146,10 @@ export const AddAccountModal = ({ open, handleClose }) => {
               >
                 {options.map(option => (
                   <MenuItem key={option.value} value={option.value}>
-                    {option.name}
+                    <div
+                      className={classes.colorDisplay}
+                      style={{ backgroundColor: `#${option.value}` }}
+                    />
                   </MenuItem>
                 ))}
               </TextField>

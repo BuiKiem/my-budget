@@ -10,7 +10,7 @@ import {
   useTheme
 } from "@material-ui/core";
 import { Settings as SettingsIcon } from "@material-ui/icons";
-import useAxios from "axios-hooks";
+import { Link } from "react-router-dom";
 
 import { Account } from "../Account/Account";
 import { AddAccountButton } from "../AddAccountButton/AddAccountButton";
@@ -40,6 +40,8 @@ export const AccountList = ({ data }) => {
         }
         action={
           <IconButton
+            component={Link}
+            to="/accounts/"
             classes={{ root: classes.root }}
             aria-label="configure account"
           >

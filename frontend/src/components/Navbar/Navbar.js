@@ -6,7 +6,8 @@ import {
   IconButton,
   MenuItem,
   MenuList,
-  Link
+  Link,
+  Hidden
 } from "@material-ui/core";
 import { Menu as MenuIcon } from "@material-ui/icons";
 import { Link as RouterLink } from "react-router-dom";
@@ -18,14 +19,18 @@ export const Navbar = () => {
         <IconButton edge="start" color="inherit" aria-label="menu">
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6">My Budget</Typography>
-        <MenuList>
-          <MenuItem>
-            <Link component={RouterLink} to="/accounts/" color="inherit">
-              Accounts
-            </Link>
-          </MenuItem>
-        </MenuList>
+        <Link variant="h6" color="inherit" component={RouterLink} to="/">
+          My Budget
+        </Link>
+        <Hidden xsDown>
+          <MenuList>
+            <MenuItem>
+              <Link component={RouterLink} to="/accounts/" color="inherit">
+                Accounts
+              </Link>
+            </MenuItem>
+          </MenuList>
+        </Hidden>
       </Toolbar>
     </AppBar>
   );

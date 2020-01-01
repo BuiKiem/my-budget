@@ -63,15 +63,10 @@ const schema = Yup.object().shape({
     .typeError("The amount must be a number")
 });
 
-export const AddAccountModal = ({ open, handleClose }) => {
+export const AddAccountModal = ({ open, handleClose, defaultValues }) => {
   const [colorOptions, setColorOptions] = useState();
   const { register, handleSubmit, errors, control } = useForm({
     validationSchema: schema,
-    defaultValues: {
-      name: "",
-      color: "",
-      initial_balance: 0
-    },
     reValidateMode: "onBlur"
   });
   const theme = useTheme();
@@ -89,11 +84,12 @@ export const AddAccountModal = ({ open, handleClose }) => {
       .post("http://localhost:8000/api/accounts/", data)
       .then(response => {
         alert("Success!");
-        handleClose();
       })
       .catch(error => {
-        console.error(error);
         alert(error);
+      })
+      .finally(() => {
+        handleClose();
       });
   };
 
@@ -126,6 +122,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
       <DialogContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <TextField
+            value={defaultValues && defaultValues.name}
             inputRef={register}
             helperText={errors.name ? errors.name.message : ""}
             variant="outlined"
@@ -166,10 +163,12 @@ export const AddAccountModal = ({ open, handleClose }) => {
               </TextField>
             }
             name="color"
+            defaultValue={defaultValues && defaultValues.color}
             control={control}
           />
 
           <TextField
+            value={defaultValues && defaultValues.initial_balance}
             error={!!errors.initial_balance}
             helperText={
               errors.initial_balance ? errors.initial_balance.message : ""

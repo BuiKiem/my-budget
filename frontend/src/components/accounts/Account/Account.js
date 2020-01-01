@@ -21,10 +21,8 @@ const useStyles = makeStyles({
   }
 });
 
-export const Account = ({
-  account: { name, initial_balance, color },
-  ...buttonProps
-}) => {
+export const Account = ({ account, ...buttonProps }) => {
+  const { name, color, initial_balance } = account;
   const theme = useTheme();
   const textColor = theme.palette.getContrastText(`#${color}`);
   const classes = useStyles({ bgColor: color, textColor });

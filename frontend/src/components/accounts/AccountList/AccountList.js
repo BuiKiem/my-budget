@@ -17,6 +17,7 @@ import { AddAccountButton } from "../AddAccountButton/AddAccountButton";
 import { AddAccountModal } from "../AddAccountModal/AddAccountModal";
 
 import { useBoolean } from "../../../hooks";
+import { createAccount } from "../../../actions";
 
 const useStyles = makeStyles({
   root: {
@@ -63,7 +64,11 @@ export const AccountList = ({ data }) => {
         </Grid>
       </CardContent>
 
-      <AddAccountModal open={isOpen} handleClose={handleClose} />
+      <AddAccountModal
+        open={isOpen}
+        handleClose={handleClose}
+        submitAction={createAccount}
+      />
     </Card>
   );
 };

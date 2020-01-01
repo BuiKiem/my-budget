@@ -13,7 +13,8 @@ import {
   useTheme,
   makeStyles,
   Typography,
-  Card
+  Card,
+  Input
 } from "@material-ui/core";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import { Close as CloseIcon } from "@material-ui/icons";
@@ -63,7 +64,12 @@ const schema = Yup.object().shape({
     .typeError("The amount must be a number")
 });
 
-export const AddAccountModal = ({ open, handleClose, defaultValues }) => {
+export const AddAccountModal = ({
+  open,
+  handleClose,
+  account,
+  submitAction
+}) => {
   const [colorOptions, setColorOptions] = useState();
   const { register, handleSubmit, errors, control } = useForm({
     validationSchema: schema,
@@ -80,17 +86,8 @@ export const AddAccountModal = ({ open, handleClose, defaultValues }) => {
   }, []);
 
   const onSubmit = data => {
-    axios
-      .post("http://localhost:8000/api/accounts/", data)
-      .then(response => {
-        alert("Success!");
-      })
-      .catch(error => {
-        alert(error);
-      })
-      .finally(() => {
-        handleClose();
-      });
+    submitAction(data);
+    handleClose();
   };
 
   if (!colorOptions) return <p>Loading...</p>;
@@ -121,8 +118,16 @@ export const AddAccountModal = ({ open, handleClose, defaultValues }) => {
       </DialogTitle>
       <DialogContent>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
+          {account && (
+            <Input
+              type="hidden"
+              inputRef={register}
+              name="id"
+              value={account.id}
+            />
+          )}
           <TextField
-            value={defaultValues && defaultValues.name}
+            defaultValue={account && account.name}
             inputRef={register}
             helperText={errors.name ? errors.name.message : ""}
             variant="outlined"
@@ -163,12 +168,12 @@ export const AddAccountModal = ({ open, handleClose, defaultValues }) => {
               </TextField>
             }
             name="color"
-            defaultValue={defaultValues && defaultValues.color}
+            defaultValue={account && account.color}
             control={control}
           />
 
           <TextField
-            value={defaultValues && defaultValues.initial_balance}
+            defaultValue={account && account.initial_balance}
             error={!!errors.initial_balance}
             helperText={
               errors.initial_balance ? errors.initial_balance.message : ""

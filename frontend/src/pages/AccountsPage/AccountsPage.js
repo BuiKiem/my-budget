@@ -3,12 +3,13 @@ import { Grid, Paper, Card, Hidden } from "@material-ui/core";
 import { Account } from "../../components/accounts/Account/Account";
 import { AddAccountModal } from "../../components/accounts/AddAccountModal/AddAccountModal";
 import { useBoolean } from "../../hooks";
+import { updateAccount } from "../../actions";
 
 export const AccountsPage = ({ data }) => {
   const [isOpen, handleOpen, handleClose] = useBoolean(false);
   const [currentAccount, setCurrentAccount] = useState(null);
 
-  const handleClick = account => {;
+  const handleClick = account => {
     setCurrentAccount(account);
     handleOpen();
   };
@@ -39,7 +40,8 @@ export const AccountsPage = ({ data }) => {
       <AddAccountModal
         open={isOpen}
         handleClose={handleClose}
-        defaultValues={currentAccount}
+        account={currentAccount}
+        submitAction={updateAccount}
       />
     </>
   );

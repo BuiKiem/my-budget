@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Typography, makeStyles, useTheme } from "@material-ui/core";
+import { AccountBalanceWallet as WalletIcon } from "@material-ui/icons";
 
 const useStyles = makeStyles({
   root: {
@@ -7,8 +8,12 @@ const useStyles = makeStyles({
     height: "100%",
     textAlign: "left"
   },
-  label: {
+  containedLabel: {
     display: "block"
+  },
+  outlinedLabel: {
+    display: "flex",
+    justifyContent: "space-between"
   },
   contained: {
     backgroundColor: props => `#${props.bgColor}`,
@@ -16,20 +21,29 @@ const useStyles = makeStyles({
   }
 });
 
-export const Account = ({ account: { name, initial_balance, color } }) => {
+export const Account = ({
+  account: { name, initial_balance, color },
+  ...buttonProps
+}) => {
   const theme = useTheme();
   const textColor = theme.palette.getContrastText(`#${color}`);
   const classes = useStyles({ bgColor: color, textColor });
   return (
     <Button
-      variant="contained"
       disableElevation
       classes={{
         root: classes.root,
-        label: classes.label,
+        label:
+          buttonProps.variant === "outlined"
+            ? classes.outlinedLabel
+            : classes.containedLabel,
         contained: classes.contained
       }}
+      {...buttonProps}
     >
+      {buttonProps.variant === "outlined" && (
+        <WalletIcon htmlColor={`#${color}`} />
+      )}
       <Typography variant="button" component="h3">
         {name}
       </Typography>

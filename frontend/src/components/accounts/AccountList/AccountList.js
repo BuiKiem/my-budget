@@ -54,7 +54,7 @@ export const AccountList = ({ data }) => {
         <Grid container spacing={1}>
           {accounts.map(account => (
             <Grid item xs={6} sm={4} md={2} key={account.id}>
-              <Account account={account} />
+              <Account variant="contained" account={account} />
             </Grid>
           ))}
           <Grid item xs={6} sm={4} md={2}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -54,8 +54,6 @@ const DialogTitle = props => {
   );
 };
 
-const options = [];
-
 const schema = Yup.object().shape({
   name: Yup.string().required("Account name is required"),
   initial_balance: Yup.number()
@@ -66,6 +64,7 @@ const schema = Yup.object().shape({
 });
 
 export const AddAccountModal = ({ open, handleClose }) => {
+  const [colorOptions, setColorOptions] = useState();
   const { register, handleSubmit, errors, control } = useForm({
     validationSchema: schema,
     defaultValues: {
@@ -82,7 +81,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/accounts/get-color-list/")
-      .then(response => response.data.map(option => options.push(option)));
+      .then(response => setColorOptions(response.data));
   }, []);
 
   const onSubmit = data => {
@@ -98,6 +97,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
       });
   };
 
+  if (!colorOptions) return <p>Loading...</p>;
   return (
     <Dialog
       classes={{
@@ -155,7 +155,7 @@ export const AddAccountModal = ({ open, handleClose }) => {
                     : "Please select your currency"
                 }
               >
-                {options.map(option => (
+                {colorOptions.map(option => (
                   <MenuItem key={option.value} value={option.value}>
                     <div
                       className={classes.colorDisplay}

@@ -4,6 +4,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import { IndexPage } from "./pages/IndexPage/IndexPage";
 import { AccountsPage } from "./pages/AccountsPage/AccountsPage";
+import { Layout } from "./components/Layout/Layout";
 
 const theme = createMuiTheme({
   palette: {
@@ -38,12 +39,14 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Switch>
-          <Route path="/accounts/">
-            <AccountsPage />
-          </Route>
-          <Route path="/">
-            <IndexPage />
-          </Route>
+          <Layout>
+            <Route path="/accounts/">
+              <AccountsPage />
+            </Route>
+            <Route exact path="/">
+              <IndexPage />
+            </Route>
+          </Layout>
         </Switch>
       </ThemeProvider>
     </BrowserRouter>

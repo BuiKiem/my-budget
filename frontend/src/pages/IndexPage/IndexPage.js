@@ -1,5 +1,4 @@
 import React from "react";
-import { Layout } from "../../components/Layout/Layout";
 import { AccountList } from "../../components/accounts/AccountList/AccountList";
 import useAxios from "axios-hooks";
 
@@ -10,9 +9,5 @@ export const IndexPage = () => {
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error...</p>;
-  return (
-    <Layout>
-      <AccountList data={data} />
-    </Layout>
-  );
+  return <AccountList data={data} />;
 };
